@@ -253,12 +253,56 @@ This is what a buyer runs to see "yes, this works." Constraints:
   to `marimo edit demo.py` with only the bundle's stated dependencies.
 - **No MLflow.** MLflow is dev-time tooling for us; the buyer doesn't
   need it. Train the model right in the notebook.
-- **One narrative thread.** Generate data → fit → diagnose → interpret.
-  The buyer reads top-to-bottom and understands the workflow.
+- **One narrative thread.** Generate data → **explore data** → fit →
+  diagnose → interpret. The buyer reads top-to-bottom and understands
+  the workflow.
 - **At least one interactive cell** (`mo.ui.slider` or similar) so the
   buyer feels the value of marimo's reactivity.
 - **Validates clean** with `marimo check`. Renders end-to-end with
   `marimo export html` (test before committing).
+
+### Data exploration section (mandatory in every demo.py)
+
+Before training anything, every `demo.py` includes a **"Data
+exploration — how hard is this problem?"** section with four standard
+visualizations. They take ~30 seconds to scan and answer the most
+important question a buyer has: *is this problem trivial, hard, or
+impossible?*
+
+**For classification bundles:**
+
+1. **Class balance** — bar chart of target counts. Makes the imbalance
+   visceral instead of just a number in the data summary.
+2. **Per-feature distributions by class** — small-multiples grid of
+   per-feature histograms with class-0 and class-1 overlaid.
+   Overlapping distributions = uninformative feature; separated = signal.
+3. **Correlation heatmap** — full feature × feature × target Pearson
+   matrix with the target column annotated with the actual numbers.
+4. **PCA 2D scatter colored by class** — are the classes separable in
+   the top-2 PCs? If yes, the problem is trivial and a linear model is
+   fine. If not, you need a non-linear model (XGBoost).
+
+**For regression bundles:**
+
+1. **Target distribution** — histogram with mean line. Shape and scale
+   of what we're predicting.
+2. **Feature vs target scatter** — small-multiples grid of per-feature
+   scatter plots against the target. Linear relationships are easy;
+   structure that bends is where XGBoost wins.
+3. **Correlation heatmap** — same shape as the classification version.
+   **Important caveat to surface in markdown**: weak linear correlation
+   does not mean a feature is useless (e.g. Friedman1's `sin(π·x₀·x₁)`
+   term has zero linear correlation but drives most of the signal).
+4. **PCA 2D scatter colored by target value** — does the target vary
+   smoothly in the top-2 PC space? Smooth gradient = linear models
+   work; messy = non-linear methods needed.
+
+The four visualizations should appear **after** the dataset summary
+cell and **before** the train/test split. Any unused cells in a small-
+multiples grid should be hidden with `axis("off")`.
+
+The reference implementations are in
+`bundles/binary-classification/demo.py` and `bundles/regression/demo.py`.
 
 ### `manifest.json`
 

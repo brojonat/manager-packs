@@ -26,6 +26,7 @@ def imports():
     from sklearn.calibration import calibration_curve
     from sklearn.compose import ColumnTransformer
     from sklearn.datasets import make_classification
+    from sklearn.decomposition import PCA
     from sklearn.linear_model import LogisticRegression
     from sklearn.metrics import (
         average_precision_score,
@@ -41,6 +42,7 @@ def imports():
     return (
         ColumnTransformer,
         LogisticRegression,
+        PCA,
         Pipeline,
         StandardScaler,
         XGBClassifier,
@@ -123,6 +125,163 @@ def show_data(df, mo):
     See `SKILL.md` for the full ibis pattern.
     """
     )
+    return
+
+
+@app.cell
+def exploration_section(mo):
+    mo.md(r"""
+    ## Data exploration — how hard is this problem?
+
+    Before training anything, take 30 seconds to look at the inputs.
+    Four views answer most "is this trivial / hard / impossible?"
+    questions:
+
+    1. **Class balance** — am I about to train a model on a 99/1 split?
+    2. **Per-feature distributions by class** — which features actually
+       carry signal vs which are noise?
+    3. **Correlation heatmap** — are features redundant? Does any single
+       feature have a strong linear relationship to the target?
+    4. **PCA in 2D** — are the classes separable with just two linear
+       combinations of features? If yes, the problem is trivial. If
+       not, you'll need a non-linear model (like XGBoost).
+    """)
+    return
+
+
+@app.cell
+def class_balance_plot(df, mo, plt):
+    bal_counts = df["target"].value_counts().sort_index()
+    fig_bal, ax_bal = plt.subplots(figsize=(5, 3.5))
+    bars_bal = ax_bal.bar(
+        ["class 0 (negative)", "class 1 (positive)"],
+        bal_counts.values,
+        color=["#4477aa", "#cc3311"],
+    )
+    for bar_b, val_b in zip(bars_bal, bal_counts.values):
+        ax_bal.text(
+            bar_b.get_x() + bar_b.get_width() / 2,
+            val_b,
+            str(int(val_b)),
+            ha="center",
+            va="bottom",
+        )
+    ax_bal.set_ylabel("count")
+    ax_bal.set_title(
+        f"Class balance — {bal_counts[1] / bal_counts.sum():.1%} positive"
+    )
+    fig_bal.tight_layout()
+    mo.as_html(fig_bal)
+    return
+
+
+@app.cell
+def feature_distributions_plot(df, feature_cols, mo, plt):
+    n_feat_dist = len(feature_cols)
+    n_cols_dist = 4
+    n_rows_dist = (n_feat_dist + n_cols_dist - 1) // n_cols_dist
+    fig_dist, axes_dist = plt.subplots(
+        n_rows_dist, n_cols_dist, figsize=(12, 2.2 * n_rows_dist)
+    )
+    pos_dist = df["target"] == 1
+    for idx_dist, feat_name in enumerate(feature_cols):
+        ax_d = axes_dist[idx_dist // n_cols_dist, idx_dist % n_cols_dist]
+        ax_d.hist(
+            df.loc[~pos_dist, feat_name],
+            bins=30,
+            alpha=0.55,
+            label="0",
+            color="#4477aa",
+            density=True,
+        )
+        ax_d.hist(
+            df.loc[pos_dist, feat_name],
+            bins=30,
+            alpha=0.55,
+            label="1",
+            color="#cc3311",
+            density=True,
+        )
+        ax_d.set_title(feat_name, fontsize=9)
+        ax_d.tick_params(labelsize=7)
+        if idx_dist == 0:
+            ax_d.legend(fontsize=7, title="class")
+    # blank out unused axes
+    for idx_blank in range(n_feat_dist, n_rows_dist * n_cols_dist):
+        axes_dist[idx_blank // n_cols_dist, idx_blank % n_cols_dist].axis("off")
+    fig_dist.suptitle(
+        "Feature distributions by class — overlapping = uninformative, separated = signal",
+        fontsize=10,
+    )
+    fig_dist.tight_layout()
+    mo.as_html(fig_dist)
+    return
+
+
+@app.cell
+def correlation_heatmap(df, feature_cols, mo, plt):
+    corr_cols = feature_cols + ["target"]
+    corr_matrix = df[corr_cols].corr().values
+    fig_corr, ax_corr = plt.subplots(figsize=(8, 6.5))
+    im_corr = ax_corr.imshow(
+        corr_matrix, cmap="RdBu_r", vmin=-1, vmax=1, aspect="auto"
+    )
+    ax_corr.set_xticks(range(len(corr_cols)))
+    ax_corr.set_yticks(range(len(corr_cols)))
+    ax_corr.set_xticklabels(corr_cols, rotation=45, ha="right", fontsize=8)
+    ax_corr.set_yticklabels(corr_cols, fontsize=8)
+    # Annotate the target row + column with the correlation values
+    target_idx = len(corr_cols) - 1
+    for i_corr in range(len(corr_cols)):
+        ax_corr.text(
+            target_idx,
+            i_corr,
+            f"{corr_matrix[i_corr, target_idx]:.2f}",
+            ha="center",
+            va="center",
+            fontsize=7,
+            color="black" if abs(corr_matrix[i_corr, target_idx]) < 0.5 else "white",
+        )
+    ax_corr.set_title("Pearson correlations (annotated column = correlation with target)")
+    fig_corr.colorbar(im_corr, ax=ax_corr, fraction=0.046)
+    fig_corr.tight_layout()
+    mo.as_html(fig_corr)
+    return
+
+
+@app.cell
+def pca_class_plot(PCA, StandardScaler, df, feature_cols, mo, plt):
+    pca_X_scaled = StandardScaler().fit_transform(df[feature_cols])
+    pca_model = PCA(n_components=2)
+    pca_X = pca_model.fit_transform(pca_X_scaled)
+
+    fig_pca, ax_pca = plt.subplots(figsize=(7, 5.5))
+    pos_pca = df["target"].to_numpy() == 1
+    ax_pca.scatter(
+        pca_X[~pos_pca, 0],
+        pca_X[~pos_pca, 1],
+        s=10,
+        alpha=0.5,
+        color="#4477aa",
+        label="class 0",
+    )
+    ax_pca.scatter(
+        pca_X[pos_pca, 0],
+        pca_X[pos_pca, 1],
+        s=10,
+        alpha=0.7,
+        color="#cc3311",
+        label="class 1",
+    )
+    pca_var = pca_model.explained_variance_ratio_
+    ax_pca.set_xlabel(f"PC1 ({pca_var[0]:.1%} variance)")
+    ax_pca.set_ylabel(f"PC2 ({pca_var[1]:.1%} variance)")
+    ax_pca.set_title(
+        f"PCA 2D projection — {pca_var.sum():.1%} of variance shown"
+    )
+    ax_pca.legend(loc="best")
+    fig_pca.tight_layout()
+    mo.as_html(fig_pca)
     return
 
 

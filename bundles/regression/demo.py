@@ -28,6 +28,7 @@ def imports():
     from scipy import stats
     from sklearn.compose import ColumnTransformer
     from sklearn.datasets import make_friedman1
+    from sklearn.decomposition import PCA
     from sklearn.linear_model import LinearRegression
     from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
     from sklearn.model_selection import train_test_split
@@ -38,6 +39,7 @@ def imports():
     return (
         ColumnTransformer,
         LinearRegression,
+        PCA,
         Pipeline,
         StandardScaler,
         XGBRegressor,
@@ -117,6 +119,136 @@ def show_data(df, mo):
     boundary. See `SKILL.md` for the full ibis pattern.
     """
     )
+    return
+
+
+@app.cell
+def exploration_section(mo):
+    mo.md(r"""
+    ## Data exploration — how hard is this problem?
+
+    Before training anything, take 30 seconds to look at the inputs.
+    Four views answer most "is this trivial / hard / impossible?"
+    questions:
+
+    1. **Target distribution** — what scale and shape are we predicting?
+    2. **Per-feature scatter vs target** — which features carry signal?
+       Linear relationships are easy; structure that bends is where
+       XGBoost wins.
+    3. **Correlation heatmap** — feature-feature redundancy plus how
+       linearly correlated each feature is with the target. **A weak
+       linear correlation does not mean the feature is useless** —
+       Friedman1's `sin(π·x₀·x₁)` term has zero linear correlation but
+       drives most of the signal.
+    4. **PCA in 2D, colored by target** — does the target vary smoothly
+       in the top-2 PC space? If yes, plain linear models work. If the
+       gradient is messy, you need non-linear methods.
+    """)
+    return
+
+
+@app.cell
+def target_distribution_plot(df, mo, plt):
+    fig_tdist, ax_tdist = plt.subplots(figsize=(7, 3.5))
+    ax_tdist.hist(df["target"], bins=40, color="#4477aa", alpha=0.7, density=True)
+    target_mean_value = float(df["target"].mean())
+    target_std_value = float(df["target"].std())
+    ax_tdist.axvline(
+        target_mean_value, color="red", lw=2, ls="--",
+        label=f"mean = {target_mean_value:.2f}"
+    )
+    ax_tdist.set_xlabel("target")
+    ax_tdist.set_ylabel("density")
+    ax_tdist.set_title(
+        f"Target distribution — mean {target_mean_value:.2f}, std {target_std_value:.2f}"
+    )
+    ax_tdist.legend(loc="best")
+    fig_tdist.tight_layout()
+    mo.as_html(fig_tdist)
+    return
+
+
+@app.cell
+def feature_vs_target_plot(df, feature_cols, mo, plt):
+    n_feat_fv = len(feature_cols)
+    n_cols_fv = 5
+    n_rows_fv = (n_feat_fv + n_cols_fv - 1) // n_cols_fv
+    fig_fv, axes_fv = plt.subplots(
+        n_rows_fv, n_cols_fv, figsize=(14, 2.5 * n_rows_fv)
+    )
+    for idx_fv, feat_name_fv in enumerate(feature_cols):
+        ax_fv = axes_fv[idx_fv // n_cols_fv, idx_fv % n_cols_fv]
+        ax_fv.scatter(df[feat_name_fv], df["target"], s=5, alpha=0.4, color="#222222")
+        ax_fv.set_xlabel(feat_name_fv, fontsize=8)
+        if idx_fv % n_cols_fv == 0:
+            ax_fv.set_ylabel("target", fontsize=8)
+        ax_fv.tick_params(labelsize=7)
+    # Hide any unused axes
+    for idx_fv_blank in range(n_feat_fv, n_rows_fv * n_cols_fv):
+        axes_fv[idx_fv_blank // n_cols_fv, idx_fv_blank % n_cols_fv].axis("off")
+    fig_fv.suptitle(
+        "Feature vs target — informative features show structure; noise features look uniform",
+        fontsize=10,
+    )
+    fig_fv.tight_layout()
+    mo.as_html(fig_fv)
+    return
+
+
+@app.cell
+def correlation_heatmap(df, feature_cols, mo, plt):
+    corr_cols = feature_cols + ["target"]
+    corr_matrix = df[corr_cols].corr().values
+    fig_corr, ax_corr = plt.subplots(figsize=(8, 6.5))
+    im_corr = ax_corr.imshow(
+        corr_matrix, cmap="RdBu_r", vmin=-1, vmax=1, aspect="auto"
+    )
+    ax_corr.set_xticks(range(len(corr_cols)))
+    ax_corr.set_yticks(range(len(corr_cols)))
+    ax_corr.set_xticklabels(corr_cols, rotation=45, ha="right", fontsize=8)
+    ax_corr.set_yticklabels(corr_cols, fontsize=8)
+    target_idx = len(corr_cols) - 1
+    for i_corr in range(len(corr_cols)):
+        ax_corr.text(
+            target_idx,
+            i_corr,
+            f"{corr_matrix[i_corr, target_idx]:.2f}",
+            ha="center",
+            va="center",
+            fontsize=7,
+            color="black" if abs(corr_matrix[i_corr, target_idx]) < 0.5 else "white",
+        )
+    ax_corr.set_title("Pearson correlations (annotated column = correlation with target)")
+    fig_corr.colorbar(im_corr, ax=ax_corr, fraction=0.046)
+    fig_corr.tight_layout()
+    mo.as_html(fig_corr)
+    return
+
+
+@app.cell
+def pca_target_plot(PCA, StandardScaler, df, feature_cols, mo, plt):
+    pca_X_scaled = StandardScaler().fit_transform(df[feature_cols])
+    pca_model = PCA(n_components=2)
+    pca_X = pca_model.fit_transform(pca_X_scaled)
+
+    fig_pca, ax_pca = plt.subplots(figsize=(7, 5.5))
+    sc_pca = ax_pca.scatter(
+        pca_X[:, 0],
+        pca_X[:, 1],
+        c=df["target"],
+        s=12,
+        alpha=0.75,
+        cmap="viridis",
+    )
+    pca_var = pca_model.explained_variance_ratio_
+    ax_pca.set_xlabel(f"PC1 ({pca_var[0]:.1%} variance)")
+    ax_pca.set_ylabel(f"PC2 ({pca_var[1]:.1%} variance)")
+    ax_pca.set_title(
+        f"PCA 2D projection colored by target — {pca_var.sum():.1%} variance shown"
+    )
+    fig_pca.colorbar(sc_pca, ax=ax_pca, label="target")
+    fig_pca.tight_layout()
+    mo.as_html(fig_pca)
     return
 
 
