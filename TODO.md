@@ -124,7 +124,17 @@ Each bundle copies `template-sklearn-pipeline` and specializes it.
   New `datagen friedman` subcommand added for the dataset. Verified:
   RMSE 1.30 vs irreducible 1.00 (excess 0.30); R² 0.93; conformal
   coverage 89% vs nominal 90% (raw was 72%).
-- [ ] `unsupervised` — clustering with stability checks, anomaly detection
+- [x] `unsupervised` — KMeans / GMM / DBSCAN clustering with **K
+  selection via silhouette** (not visual elbow), **stability checks**
+  via pairwise ARI across random seeds, **IsolationForest** for
+  anomaly detection, PCA for dimensionality reduction. Demo
+  contrasts blobs (KMeans wins) vs moons (DBSCAN wins) so the
+  algorithm-shape matching lesson is impossible to miss. Studio
+  scratch at `studio/scratch/unsupervised/`, bundle at
+  `bundles/unsupervised/`. Verified: K=4 chosen on blobs (true K=4),
+  stability ARI = 1.000, KMeans/GMM ARI vs truth = 1.000,
+  IsolationForest precision 0.97 / recall 1.00 on 30 planted
+  outliers.
 
 ---
 
