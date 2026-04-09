@@ -1,0 +1,18 @@
+{
+  "name": "k8s-deployment",
+  "title": "Kubernetes Deployment with Docker & Kustomize",
+  "description": "Deploy services to Kubernetes with Docker multi-stage builds, kustomize overlays, and Makefile automation. Covers Dockerfiles, k8s manifests, and deployment pipelines.",
+  "price_cents": 500,
+  "tags": [
+    "infrastructure",
+    "devops",
+    "kubernetes"
+  ],
+  "files": [
+    "SKILL.md"
+  ],
+  "stripe_product_id": "prod_UHSlk4L0W4TTY7",
+  "stripe_price_id": "price_1TItqDGnCcvCECquGXpLH6Vw",
+  "stripe_payment_link": "https://buy.stripe.com/test_7sY6oHbiU2FOdPdeCt4ow3L",
+  "reddit_post_id": null
+}

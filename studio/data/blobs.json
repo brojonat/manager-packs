@@ -1,0 +1,40 @@
+{
+  "problem": "blobs",
+  "n_rows": 600,
+  "columns": [
+    "feature_0",
+    "feature_1",
+    "cluster"
+  ],
+  "dtypes": {
+    "feature_0": "float64",
+    "feature_1": "float64",
+    "cluster": "int16"
+  },
+  "ground_truth": {
+    "n": 600,
+    "n_features": 2,
+    "n_centers": 3,
+    "cluster_std": 1.0,
+    "seed": 42,
+    "true_centers": [
+      [
+        -2.50919762305275,
+        9.014286128198322
+      ],
+      [
+        4.639878836228101,
+        1.973169683940732
+      ],
+      [
+        -6.87962719115127,
+        -6.880109593275947
+      ]
+    ],
+    "cluster_counts": {
+      "0": 200,
+      "1": 200,
+      "2": 200
+    }
+  }
+}

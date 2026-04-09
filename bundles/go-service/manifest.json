@@ -1,0 +1,18 @@
+{
+  "name": "go-service",
+  "title": "Go Microservices with stdlib HTTP, sqlc & slog",
+  "description": "Build Go microservices using stdlib HTTP handlers, sqlc for type-safe SQL, urfave/cli for commands, and slog for structured logging.",
+  "price_cents": 500,
+  "tags": [
+    "backend",
+    "go",
+    "microservices"
+  ],
+  "files": [
+    "SKILL.md"
+  ],
+  "stripe_product_id": "prod_UHSlp269q4Nn2g",
+  "stripe_price_id": "price_1TItq9GnCcvCECquAyusdeON",
+  "stripe_payment_link": "https://buy.stripe.com/test_5kQ28raeQdks3az1PH4ow3J",
+  "reddit_post_id": null
+}

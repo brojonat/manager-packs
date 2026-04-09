@@ -1,0 +1,44 @@
+{
+  "problem": "regression",
+  "n_rows": 500,
+  "columns": [
+    "feature_0",
+    "feature_1",
+    "feature_2",
+    "feature_3",
+    "feature_4",
+    "feature_5",
+    "feature_6",
+    "feature_7",
+    "target"
+  ],
+  "dtypes": {
+    "feature_0": "float64",
+    "feature_1": "float64",
+    "feature_2": "float64",
+    "feature_3": "float64",
+    "feature_4": "float64",
+    "feature_5": "float64",
+    "feature_6": "float64",
+    "feature_7": "float64",
+    "target": "float64"
+  },
+  "ground_truth": {
+    "n": 500,
+    "n_features": 8,
+    "n_informative": 5,
+    "noise": 0.5,
+    "bias": 0.0,
+    "seed": 42,
+    "true_coefficients": {
+      "feature_0": 97.24613900279022,
+      "feature_1": 0.0,
+      "feature_2": 51.801043137609796,
+      "feature_3": 61.41862443190114,
+      "feature_4": 0.0,
+      "feature_5": 8.540303016272166,
+      "feature_6": 48.50179875240413,
+      "feature_7": 0.0
+    }
+  }
+}

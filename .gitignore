@@ -1,0 +1,24 @@
+.env.dev
+.env.prod
+__pycache__/
+*.egg-info/
+dist/
+build/
+.venv/
+node_modules/
+
+# Third-party skills (managed via skills-lock.json, not source)
+.agents/
+.claude/
+
+# Wrangler local cache
+.wrangler/
+
+# Studio: MLflow tracking stores and temp plot output
+studio/templates/*/mlruns/
+studio/templates/*/_tmp_plots/
+studio/scratch/*/mlruns/
+studio/scratch/*/_tmp_plots/
+
+# Marimo internal session cache
+**/__marimo__/

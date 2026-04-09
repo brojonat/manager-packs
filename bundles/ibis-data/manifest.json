@@ -1,0 +1,18 @@
+{
+  "name": "ibis-data",
+  "title": "Ibis for Portable Data Access",
+  "description": "Database-agnostic data access with Ibis. Write queries once in Python, run them on DuckDB, PostgreSQL, or SQLite. Covers connections, expressions, joins, aggregations, and window functions.",
+  "price_cents": 500,
+  "tags": [
+    "data-engineering",
+    "python",
+    "databases"
+  ],
+  "files": [
+    "SKILL.md"
+  ],
+  "stripe_product_id": "prod_UHSlPCV1BzA0Bi",
+  "stripe_price_id": "price_1TItqEGnCcvCECquiVEr5zUY",
+  "stripe_payment_link": "https://buy.stripe.com/test_7sYeVdfza8088uTdyp4ow3M",
+  "reddit_post_id": null
+}

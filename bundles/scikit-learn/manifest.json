@@ -1,0 +1,18 @@
+{
+  "name": "scikit-learn",
+  "title": "scikit-learn ML Pipelines",
+  "description": "Build reproducible ML workflows with scikit-learn Pipelines, ColumnTransformers, cross-validation, hyperparameter tuning, and MLflow tracking.",
+  "price_cents": 500,
+  "tags": [
+    "data-science",
+    "ml",
+    "python"
+  ],
+  "files": [
+    "SKILL.md"
+  ],
+  "stripe_product_id": "prod_UHSl2xdjk5N4jU",
+  "stripe_price_id": "price_1TItq0GnCcvCECqu0VX0N5Bt",
+  "stripe_payment_link": "https://buy.stripe.com/test_9B68wPaeQ80826v65X4ow3H",
+  "reddit_post_id": "1sd8o7r"
+}

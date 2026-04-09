@@ -1,0 +1,18 @@
+{
+  "name": "temporal-python",
+  "title": "Temporal Workflows in Python",
+  "description": "Build durable workflow applications with the temporalio Python SDK. Covers workflows, activities, signals, queries, child workflows, retry policies, saga patterns, and testing.",
+  "price_cents": 500,
+  "tags": [
+    "workflows",
+    "python",
+    "infrastructure"
+  ],
+  "files": [
+    "SKILL.md"
+  ],
+  "stripe_product_id": "prod_UHSlccqOwSk75P",
+  "stripe_price_id": "price_1TItqBGnCcvCECqu5HfV70Sd",
+  "stripe_payment_link": "https://buy.stripe.com/test_00w4gz2Mo94c3azamd4ow3K",
+  "reddit_post_id": null
+}

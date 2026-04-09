@@ -1,0 +1,18 @@
+{
+  "name": "fastapi-service",
+  "title": "FastAPI Services with Auth, Logging & Metrics",
+  "description": "Build FastAPI services with JWT auth, structlog, and Prometheus metrics. Covers project layout, middleware, dependency injection, and testing patterns.",
+  "price_cents": 500,
+  "tags": [
+    "backend",
+    "python",
+    "api"
+  ],
+  "files": [
+    "SKILL.md"
+  ],
+  "stripe_product_id": "prod_UHSl62zTQ7Po8q",
+  "stripe_price_id": "price_1TItq7GnCcvCECqu6oUi8LkH",
+  "stripe_payment_link": "https://buy.stripe.com/test_5kQ8wP2Moa8g12r9i94ow3I",
+  "reddit_post_id": null
+}

@@ -1,0 +1,20 @@
+{
+  "problem": "coin-flip",
+  "n_rows": 200,
+  "columns": [
+    "flip_index",
+    "outcome"
+  ],
+  "dtypes": {
+    "flip_index": "int32",
+    "outcome": "int8"
+  },
+  "ground_truth": {
+    "n": 200,
+    "true_p": 0.7,
+    "drift": 0.0,
+    "seed": 42,
+    "is_stationary": true,
+    "empirical_p": 0.71
+  }
+}
