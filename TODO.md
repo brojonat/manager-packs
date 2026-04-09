@@ -113,7 +113,17 @@ Each bundle copies `template-sklearn-pipeline` and specializes it.
   `bundles/binary-classification/` (manifest, SKILL.md, self-contained
   demo.py). Verified: ROC-AUC 0.969, PR-AUC 0.912 (vs 0.152 baseline),
   Brier 0.040, F1 @ tuned 0.84 vs F1 @ 0.5 = 0.82.
-- [ ] `multiclass-classification` — OvR vs softmax, confusion matrices, per-class metrics
+- [x] `multiclass-classification` — XGBoost with `multi:softprob`,
+  per-class metrics (precision/recall/F1), macro vs micro vs weighted
+  F1 averaging, **`sample_weight` for class imbalance** (no
+  `scale_pos_weight` for multiclass), confusion matrix as the primary
+  diagnostic, top-K accuracy, per-class SHAP. Demo generates a 5-class
+  imbalanced dataset (40/25/15/12/8) and contrasts unweighted vs
+  weighted training to show how `sample_weight` rescues minority-class
+  F1 even though overall accuracy barely moves. Studio scratch at
+  `studio/scratch/multiclass-classification/`. Verified: 5-class
+  balanced test acc 0.84, top-3 acc 0.98, F1 macro/micro/weighted all
+  ≈ 0.84 (balanced data; demo uses imbalanced to show the divergence).
 - [ ] `multilabel-classification` — label correlations, classifier chains, hamming loss
 - [x] `regression` — XGBoost point estimator + **conformalized quantile
   regression** for prediction intervals that actually achieve nominal

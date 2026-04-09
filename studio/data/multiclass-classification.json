@@ -1,6 +1,6 @@
 {
   "problem": "multiclass-classification",
-  "n_rows": 1000,
+  "n_rows": 2000,
   "columns": [
     "feature_0",
     "feature_1",
@@ -12,6 +12,8 @@
     "feature_7",
     "feature_8",
     "feature_9",
+    "feature_10",
+    "feature_11",
     "target"
   ],
   "dtypes": {
@@ -25,21 +27,24 @@
     "feature_7": "float64",
     "feature_8": "float64",
     "feature_9": "float64",
+    "feature_10": "float64",
+    "feature_11": "float64",
     "target": "int16"
   },
   "ground_truth": {
-    "n": 1000,
-    "n_features": 10,
-    "n_informative": 6,
-    "n_classes": 4,
+    "n": 2000,
+    "n_features": 12,
+    "n_informative": 7,
+    "n_classes": 5,
     "clusters_per_class": 1,
     "class_sep": 1.0,
     "seed": 42,
     "class_counts": {
-      "0": 247,
-      "1": 250,
-      "2": 251,
-      "3": 252
+      "0": 398,
+      "1": 404,
+      "2": 398,
+      "3": 400,
+      "4": 400
     }
   }
 }

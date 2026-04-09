@@ -1,0 +1,12 @@
+{
+  "name": "multiclass-classification",
+  "title": "Multiclass Classification with XGBoost (Done Right)",
+  "description": "Build a production-ready XGBoost multiclass classifier for tabular data: per-class metrics (precision/recall/F1), confusion matrix analysis, macro vs micro vs weighted F1, sample weighting for imbalance, top-K accuracy, one-vs-rest ROC, and per-class SHAP explanations. Includes a self-contained marimo notebook with the full worked example.",
+  "price_cents": 500,
+  "tags": ["data-science", "classification", "xgboost"],
+  "files": ["SKILL.md", "demo.py"],
+  "stripe_product_id": null,
+  "stripe_price_id": null,
+  "stripe_payment_link": null,
+  "reddit_post_id": null
+}
