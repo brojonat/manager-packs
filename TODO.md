@@ -91,9 +91,16 @@ counterpart of the sklearn template.
 ## Phase 1 — Tabular DS bundles (canonical sklearn problems)
 
 Each bundle copies `template-sklearn-pipeline` and specializes it.
+**Default model: XGBoost** (see `feedback_xgboost_for_tabular.md` memory).
 
 - [ ] `tabular-eda` — high-dim EDA, PCA/UMAP, missing data, leakage detection
-- [ ] `binary-classification` — calibration, threshold tuning, class imbalance
+- [x] `binary-classification` — XGBoost with `scale_pos_weight`, threshold
+  tuning, calibration verification (Brier + reliability diagram), SHAP
+  feature importance, baseline LogisticRegression comparison.
+  Studio scratch at `studio/scratch/binary-classification/`. Bundle at
+  `bundles/binary-classification/` (manifest, SKILL.md, self-contained
+  demo.py). Verified: ROC-AUC 0.969, PR-AUC 0.912 (vs 0.152 baseline),
+  Brier 0.040, F1 @ tuned 0.84 vs F1 @ 0.5 = 0.82.
 - [ ] `multiclass-classification` — OvR vs softmax, confusion matrices, per-class metrics
 - [ ] `multilabel-classification` — label correlations, classifier chains, hamming loss
 - [ ] `regression` — robust losses, residual diagnostics, prediction intervals
