@@ -103,7 +103,15 @@ Each bundle copies `template-sklearn-pipeline` and specializes it.
   Brier 0.040, F1 @ tuned 0.84 vs F1 @ 0.5 = 0.82.
 - [ ] `multiclass-classification` — OvR vs softmax, confusion matrices, per-class metrics
 - [ ] `multilabel-classification` — label correlations, classifier chains, hamming loss
-- [ ] `regression` — robust losses, residual diagnostics, prediction intervals
+- [x] `regression` — XGBoost point estimator + **conformalized quantile
+  regression** for prediction intervals that actually achieve nominal
+  coverage (raw quantile XGBoost undercovers ~15-20pp on Friedman1; CQR
+  fixes it). Plus residual diagnostics, SHAP, and a LinearRegression
+  baseline that fails on Friedman1's `sin`/quadratic terms. Studio
+  scratch at `studio/scratch/regression/`. Bundle at `bundles/regression/`.
+  New `datagen friedman` subcommand added for the dataset. Verified:
+  RMSE 1.30 vs irreducible 1.00 (excess 0.30); R² 0.93; conformal
+  coverage 89% vs nominal 90% (raw was 72%).
 - [ ] `unsupervised` — clustering with stability checks, anomaly detection
 
 ---
@@ -184,6 +192,8 @@ Each dataset:
 - [x] `multiclass-classification` — sklearn `make_classification`, N classes
 - [x] `multilabel-classification` — sklearn `make_multilabel_classification`
 - [x] `regression` — sklearn `make_regression`, exposes true coefficients
+- [x] `friedman` — sklearn `make_friedman1`, non-linear regression with
+  known informative vs noise features (used by the `regression` bundle)
 - [x] `blobs` — sklearn `make_blobs` for clustering
 
 ### Still TODO

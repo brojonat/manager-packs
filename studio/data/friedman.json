@@ -1,0 +1,55 @@
+{
+  "problem": "friedman",
+  "n_rows": 2000,
+  "columns": [
+    "feature_0",
+    "feature_1",
+    "feature_2",
+    "feature_3",
+    "feature_4",
+    "feature_5",
+    "feature_6",
+    "feature_7",
+    "feature_8",
+    "feature_9",
+    "target"
+  ],
+  "dtypes": {
+    "feature_0": "float64",
+    "feature_1": "float64",
+    "feature_2": "float64",
+    "feature_3": "float64",
+    "feature_4": "float64",
+    "feature_5": "float64",
+    "feature_6": "float64",
+    "feature_7": "float64",
+    "feature_8": "float64",
+    "feature_9": "float64",
+    "target": "float64"
+  },
+  "ground_truth": {
+    "n": 2000,
+    "n_features": 10,
+    "n_informative": 5,
+    "informative_features": [
+      "feature_0",
+      "feature_1",
+      "feature_2",
+      "feature_3",
+      "feature_4"
+    ],
+    "noise_features": [
+      "feature_5",
+      "feature_6",
+      "feature_7",
+      "feature_8",
+      "feature_9"
+    ],
+    "noise_std": 1.0,
+    "irreducible_rmse": 1.0,
+    "seed": 42,
+    "function_form": "y = 10*sin(pi*x0*x1) + 20*(x2-0.5)^2 + 10*x3 + 5*x4 + N(0,noise)",
+    "target_mean": 14.381538559541893,
+    "target_std": 4.970063590204551
+  }
+}

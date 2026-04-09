@@ -1,0 +1,12 @@
+{
+  "name": "regression",
+  "title": "Regression with XGBoost + Conformal Prediction Intervals",
+  "description": "Build a production-ready XGBoost regressor for tabular data, with conformalized quantile regression for prediction intervals that actually achieve their stated coverage. Includes residual diagnostics, SHAP feature importance, and a self-contained marimo notebook walkthrough.",
+  "price_cents": 500,
+  "tags": ["data-science", "regression", "xgboost"],
+  "files": ["SKILL.md", "demo.py"],
+  "stripe_product_id": null,
+  "stripe_price_id": null,
+  "stripe_payment_link": null,
+  "reddit_post_id": null
+}
