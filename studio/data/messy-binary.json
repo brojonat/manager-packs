@@ -1,0 +1,86 @@
+{
+  "problem": "messy-binary",
+  "n_rows": 2000,
+  "columns": [
+    "feature_0",
+    "feature_1",
+    "feature_2",
+    "feature_3",
+    "feature_4",
+    "feature_5",
+    "target",
+    "account_balance_post_action",
+    "user_id",
+    "fraud_blocklist",
+    "transaction_amount",
+    "latency_ms",
+    "feature_1_copy",
+    "region"
+  ],
+  "dtypes": {
+    "feature_0": "float64",
+    "feature_1": "float64",
+    "feature_2": "float64",
+    "feature_3": "float64",
+    "feature_4": "float64",
+    "feature_5": "float64",
+    "target": "int8",
+    "account_balance_post_action": "float64",
+    "user_id": "object",
+    "fraud_blocklist": "int8",
+    "transaction_amount": "float64",
+    "latency_ms": "float64",
+    "feature_1_copy": "float64",
+    "region": "object"
+  },
+  "ground_truth": {
+    "n": 2000,
+    "seed": 42,
+    "target": "target",
+    "target_type": "binary",
+    "class_balance": {
+      "0": 1694,
+      "1": 306
+    },
+    "planted_issues": {
+      "target_leakage": {
+        "feature": "account_balance_post_action",
+        "expected_pearson_with_target": ">0.99",
+        "lesson": "leakage features look too good to be true"
+      },
+      "high_cardinality_categorical": {
+        "feature": "user_id",
+        "expected_unique_count": 666,
+        "lesson": "OneHotEncoder would explode"
+      },
+      "near_constant": {
+        "feature": "fraud_blocklist",
+        "expected_top_value_freq": ">0.98",
+        "lesson": "no signal, drop or ignore"
+      },
+      "missing_data_mcar": {
+        "feature": "feature_0",
+        "expected_missing_pct": 0.3,
+        "lesson": "30% MCAR \u2014 impute or drop rows"
+      },
+      "skewed_distribution": {
+        "feature": "transaction_amount",
+        "lesson": "long right tail, consider log transform"
+      },
+      "outliers": {
+        "feature": "latency_ms",
+        "expected_outlier_pct": 0.02,
+        "lesson": "use robust scaler or winsorize"
+      },
+      "redundant_feature": {
+        "feature_pair": [
+          "feature_1",
+          "feature_1_copy"
+        ],
+        "expected_pearson": ">0.99",
+        "lesson": "drop one \u2014 multicollinearity"
+      }
+    },
+    "useful_categorical": "region"
+  }
+}

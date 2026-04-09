@@ -93,7 +93,19 @@ counterpart of the sklearn template.
 Each bundle copies `template-sklearn-pipeline` and specializes it.
 **Default model: XGBoost** (see `feedback_xgboost_for_tabular.md` memory).
 
-- [ ] `tabular-eda` — high-dim EDA, PCA/UMAP, missing data, leakage detection
+- [x] `tabular-eda` — profile a new dataset before modeling. Detects
+  target leakage (>0.95 |Pearson| to target), high-cardinality
+  categoricals (>50 unique → OHE explosion), near-constant features,
+  redundant pairs, missing data per column, skewed distributions, and
+  outliers (IQR-based). Pairs **mutual information vs Pearson** to
+  catch non-linear signal Pearson misses (the Friedman1 lesson).
+  Includes target type inference (binary/multiclass/regression) so the
+  workflow ends with "what model do I train next?". Uses a new
+  `datagen messy-binary` synthetic dataset with **7 planted issues**
+  for the demo. Studio scratch at `studio/scratch/tabular-eda/`,
+  bundle at `bundles/tabular-eda/`. Verified: profiler caught all 4
+  flagged issues (leakage, high-card, near-const, redundant pair) and
+  surfaced the rest in plots.
 - [x] `binary-classification` — XGBoost with `scale_pos_weight`, threshold
   tuning, calibration verification (Brier + reliability diagram), SHAP
   feature importance, baseline LogisticRegression comparison.
@@ -194,6 +206,9 @@ Each dataset:
 - [x] `regression` — sklearn `make_regression`, exposes true coefficients
 - [x] `friedman` — sklearn `make_friedman1`, non-linear regression with
   known informative vs noise features (used by the `regression` bundle)
+- [x] `messy-binary` — binary classification with 7 planted EDA
+  issues (leakage, high-cardinality, near-constant, missing, skewed,
+  outliers, redundant pair) for the `tabular-eda` bundle
 - [x] `blobs` — sklearn `make_blobs` for clustering
 
 ### Still TODO

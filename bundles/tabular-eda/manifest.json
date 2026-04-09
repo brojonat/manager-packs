@@ -1,0 +1,12 @@
+{
+  "name": "tabular-eda",
+  "title": "Tabular EDA — Find Leakage, Quality Issues, and Hidden Signal",
+  "description": "Profile a new tabular dataset before modeling: detect target leakage, high-cardinality categoricals, missing data patterns, near-constant features, redundant pairs, and non-linear relationships that Pearson correlation misses. Includes a worked marimo notebook with a deliberately messy synthetic dataset.",
+  "price_cents": 500,
+  "tags": ["data-science", "eda", "data-quality"],
+  "files": ["SKILL.md", "demo.py"],
+  "stripe_product_id": null,
+  "stripe_price_id": null,
+  "stripe_payment_link": null,
+  "reddit_post_id": null
+}
