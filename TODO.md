@@ -124,7 +124,20 @@ Each bundle copies `template-sklearn-pipeline` and specializes it.
   `studio/scratch/multiclass-classification/`. Verified: 5-class
   balanced test acc 0.84, top-3 acc 0.98, F1 macro/micro/weighted all
   ≈ 0.84 (balanced data; demo uses imbalanced to show the divergence).
-- [ ] `multilabel-classification` — label correlations, classifier chains, hamming loss
+- [x] `multilabel-classification` — XGBoost wrapped in
+  `MultiOutputClassifier` (one independent model per label,
+  parallelized via `n_jobs=-1`). **Hamming loss as the primary metric**
+  (not subset accuracy, which is brutally strict). Four F1 averaging
+  strategies (macro/micro/weighted/**samples** — multilabel-only),
+  per-label F1 monitoring, label co-occurrence heatmap to decide
+  whether `ClassifierChain` would help, label cardinality histogram
+  (true vs predicted) to catch under-prediction. Studio scratch at
+  `studio/scratch/multilabel-classification/`. Verified on a 6-label
+  dataset with positive rates 13-53%: hamming loss 0.170, subset
+  accuracy 0.415, F1 macro 0.645, F1 micro 0.717. Per-label F1 ranges
+  from 0.45 (rarest, 12.5% positive) to 0.80 (most common, 53%
+  positive) — exactly the imbalance pattern the bundle teaches to
+  monitor.
 - [x] `regression` — XGBoost point estimator + **conformalized quantile
   regression** for prediction intervals that actually achieve nominal
   coverage (raw quantile XGBoost undercovers ~15-20pp on Friedman1; CQR

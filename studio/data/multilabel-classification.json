@@ -1,6 +1,6 @@
 {
   "problem": "multilabel-classification",
-  "n_rows": 1000,
+  "n_rows": 2000,
   "columns": [
     "feature_0",
     "feature_1",
@@ -17,16 +17,12 @@
     "feature_12",
     "feature_13",
     "feature_14",
-    "feature_15",
-    "feature_16",
-    "feature_17",
-    "feature_18",
-    "feature_19",
     "label_0",
     "label_1",
     "label_2",
     "label_3",
-    "label_4"
+    "label_4",
+    "label_5"
   ],
   "dtypes": {
     "feature_0": "float64",
@@ -44,31 +40,28 @@
     "feature_12": "float64",
     "feature_13": "float64",
     "feature_14": "float64",
-    "feature_15": "float64",
-    "feature_16": "float64",
-    "feature_17": "float64",
-    "feature_18": "float64",
-    "feature_19": "float64",
     "label_0": "int8",
     "label_1": "int8",
     "label_2": "int8",
     "label_3": "int8",
-    "label_4": "int8"
+    "label_4": "int8",
+    "label_5": "int8"
   },
   "ground_truth": {
-    "n": 1000,
-    "n_features": 20,
-    "n_labels": 5,
+    "n": 2000,
+    "n_features": 15,
+    "n_labels": 6,
     "avg_labels_per_sample_target": 2,
     "seed": 42,
-    "label_cardinality": 1.87,
-    "label_density": 0.374,
+    "label_cardinality": 1.9485,
+    "label_density": 0.32475,
     "label_counts": {
-      "label_0": 299,
-      "label_1": 534,
-      "label_2": 471,
-      "label_3": 398,
-      "label_4": 168
+      "label_0": 527,
+      "label_1": 1051,
+      "label_2": 892,
+      "label_3": 843,
+      "label_4": 271,
+      "label_5": 313
     }
   }
 }

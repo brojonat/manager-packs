@@ -1,0 +1,12 @@
+{
+  "name": "multilabel-classification",
+  "title": "Multilabel Classification with XGBoost (Done Right)",
+  "description": "Build a production-ready multilabel classifier on tabular data using XGBoost wrapped in MultiOutputClassifier. Covers per-label metrics, hamming loss vs subset accuracy, label co-occurrence analysis, the four F1 averaging strategies, MultiOutputClassifier vs ClassifierChain, and per-label SHAP. Includes a self-contained marimo notebook walkthrough.",
+  "price_cents": 500,
+  "tags": ["data-science", "classification", "xgboost"],
+  "files": ["SKILL.md", "demo.py"],
+  "stripe_product_id": null,
+  "stripe_price_id": null,
+  "stripe_payment_link": null,
+  "reddit_post_id": null
+}
