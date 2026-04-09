@@ -15,6 +15,7 @@ dependencies = [
     "scikit-learn>=1.5",
     "xgboost>=2.0",
     "shap>=0.46",
+    "ibis-framework[duckdb]>=9",
     "mlflow>=2.16",
     "pymc>=5.16",
     "arviz>=0.19",

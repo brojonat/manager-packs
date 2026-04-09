@@ -80,8 +80,13 @@ def title(mo):
 
 @app.cell
 def generate_data(make_classification, np, pd):
-    """Synthetic 15% positive imbalanced binary classification problem."""
-    X, y = make_classification(
+    """Synthetic 15%-positive imbalanced binary classification problem.
+
+    In a real bundle the buyer would read parquet via ibis (see SKILL.md).
+    Here the data is generated in memory, so we use pandas via a single
+    chained operation — same fluent style, no detour through a temp file.
+    """
+    raw_X, raw_y = make_classification(
         n_samples=2000,
         n_features=12,
         n_informative=6,
@@ -92,25 +97,30 @@ def generate_data(make_classification, np, pd):
         random_state=42,
     )
     feature_cols = [f"feature_{i}" for i in range(12)]
-    df = pd.DataFrame(X, columns=feature_cols)
-    df["target"] = y.astype(np.int8)
+    df = (
+        pd.DataFrame(raw_X, columns=feature_cols)
+        .assign(target=raw_y.astype(np.int8))
+    )
     return df, feature_cols
 
 
 @app.cell
 def show_data(df, mo):
-    n_pos = int(df["target"].sum())
-    pos_rate = n_pos / len(df)
+    show_pos_rate = float(df["target"].mean())
+    show_n_pos = int(df["target"].sum())
     mo.md(
         f"""
     ## Dataset
 
     - **Rows:** {len(df)}
     - **Features:** 12 (6 informative, 2 redundant, 4 noise)
-    - **Positive class:** {n_pos} / {len(df)} (**{pos_rate:.1%}**) — realistic imbalance
+    - **Positive class:** {show_n_pos} / {len(df)} (**{show_pos_rate:.1%}**) — realistic imbalance
 
     This is the kind of split you see in churn prediction, fraud detection,
-    conversion modeling, etc.
+    conversion modeling, etc. **In production the buyer's data lives in
+    parquet/CSV/database — read it with ibis** (`ibis.duckdb.connect().read_parquet(...)`)
+    and materialize to pandas with `.execute()` only at the sklearn boundary.
+    See `SKILL.md` for the full ibis pattern.
     """
     )
     return
@@ -118,10 +128,13 @@ def show_data(df, mo):
 
 @app.cell
 def split(df, feature_cols, train_test_split):
-    X_all = df[feature_cols]
-    y_all = df["target"].astype(int)
+    """Split into train/test in a single chained expression."""
     X_train, X_test, y_train, y_test = train_test_split(
-        X_all, y_all, test_size=0.2, random_state=42, stratify=y_all
+        df[feature_cols],
+        df["target"].astype(int),
+        test_size=0.2,
+        random_state=42,
+        stratify=df["target"],
     )
     return X_test, X_train, y_test, y_train
 

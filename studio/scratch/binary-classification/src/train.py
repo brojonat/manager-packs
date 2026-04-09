@@ -18,6 +18,7 @@ import json
 import sys
 from pathlib import Path
 
+import ibis
 import mlflow
 import mlflow.sklearn
 import numpy as np
@@ -51,6 +52,7 @@ from plots import (  # noqa: E402
 
 
 def data_hash(df: pd.DataFrame) -> str:
+    """Stable short hash of the materialized dataframe (post-ibis-execute)."""
     h = hashlib.sha256(pd.util.hash_pandas_object(df, index=True).values.tobytes())
     return h.hexdigest()[:16]
 
@@ -110,19 +112,36 @@ def main():
     if not args.data.exists():
         raise SystemExit(f"Data not found at {args.data}. Run `datagen binary-classification` first.")
 
-    df = pd.read_parquet(args.data)
     sidecar_path = args.data.with_suffix(".json")
     sidecar = json.loads(sidecar_path.read_text()) if sidecar_path.exists() else {}
     truth = sidecar.get("ground_truth", {})
 
-    feature_cols = [c for c in df.columns if c.startswith("feature_")]
-    X = df[feature_cols]
-    y = df["target"].astype(int)
+    # --- ibis: load + summarize at the source, materialize once for sklearn ---
+    table = ibis.duckdb.connect().read_parquet(str(args.data))
+    feature_cols = [c for c in table.columns if c.startswith("feature_")]
 
-    # scale_pos_weight = n_negative / n_positive
-    n_pos = int(y.sum())
-    n_neg = int(len(y) - n_pos)
+    # Class balance via an ibis aggregation (pushed down to DuckDB)
+    class_stats = (
+        table
+        .aggregate(
+            n_pos=table.target.sum().cast("int64"),
+            n_total=table.count(),
+        )
+        .execute()
+        .iloc[0]
+    )
+    n_pos = int(class_stats["n_pos"])
+    n_neg = int(class_stats["n_total"]) - n_pos
     scale_pos_weight = n_neg / n_pos if n_pos > 0 else 1.0
+
+    # Materialize features + target for sklearn (the ibis → pandas boundary)
+    data = (
+        table
+        .select(*feature_cols, "target")
+        .execute()
+    )
+    X = data[feature_cols]
+    y = data["target"].astype(int)
 
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=args.test_size, random_state=args.seed, stratify=y
@@ -136,7 +155,7 @@ def main():
         mlflow.log_params(
             {
                 "data_path": str(args.data),
-                "n_rows": len(df),
+                "n_rows": len(data),
                 "n_features": len(feature_cols),
                 "n_pos": n_pos,
                 "n_neg": n_neg,
@@ -151,7 +170,7 @@ def main():
         )
 
         # --- tags ---
-        mlflow.set_tag("data_hash", data_hash(df))
+        mlflow.set_tag("data_hash", data_hash(data))
         mlflow.set_tag("imbalance_ratio", f"{n_pos / len(y):.4f}")
         for k, v in truth.items():
             if k != "class_balance":

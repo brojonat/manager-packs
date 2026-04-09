@@ -56,6 +56,100 @@ than raw predictive accuracy.** If a buyer just wants "predict this
 column," they want XGBoost. If they want "what's the probability
 treatment B is at least 5% better than A?" they want PyMC.
 
+## 1.5 Data access conventions (cross-cutting)
+
+These rules apply to **every** dataframe operation in the studio and
+in shipped bundles. Don't violate them without a written reason.
+
+### Use ibis for data access, pandas only at the sklearn boundary
+
+`ibis-framework[duckdb]` is the default dataframe library. Use it for:
+
+- Reading parquet / CSV / database tables
+- Filtering, joining, aggregating
+- Feature engineering (column-level transforms)
+- Class balance / aggregation summaries
+- Anything that benefits from lazy evaluation or backend pushdown
+
+Sklearn estimators accept pandas DataFrames and numpy arrays but **not**
+ibis Table objects directly. Materialize with `.execute()` exactly once,
+at the boundary where data is about to be passed to `train_test_split`,
+`Pipeline.fit`, or `predict_proba`. That `.execute()` call is the
+deliberate handoff between the "data wrangling" world and the "ML
+modeling" world.
+
+```python
+import ibis
+
+# Lazy: nothing executes yet
+table = ibis.duckdb.connect().read_parquet(str(args.data))
+feature_cols = [c for c in table.columns if c.startswith("feature_")]
+
+# Aggregation pushed down to DuckDB
+class_stats = table.aggregate(
+    n_pos=table.target.sum(),
+    n_total=table.count(),
+).execute()
+n_pos = int(class_stats["n_pos"][0])
+scale_pos_weight = (int(class_stats["n_total"][0]) - n_pos) / n_pos
+
+# Materialize once for sklearn
+data = table.select(*feature_cols, "target").execute()
+X = data[feature_cols]
+y = data["target"].astype(int)
+```
+
+### Exception: in-memory data in demo notebooks
+
+If a bundle's `demo.py` generates synthetic data via
+`sklearn.datasets.make_*`, the data is already an in-memory numpy
+array. **Don't write it to a temp parquet just to "use ibis."** Use
+pandas directly via the chained style described below. The SKILL.md
+should still mention ibis as the production-time pattern when the
+buyer's data is in a file or database.
+
+### Fluent / chained style — single chain, not many mutations
+
+Build dataframe operations as a **single chain** that reads top-to-bottom
+as a recipe.
+
+GOOD:
+
+```python
+data = (
+    table
+    .filter(table.target.notnull())
+    .select(*feature_cols, "target")
+    .execute()
+)
+```
+
+BAD:
+
+```python
+table = table.filter(table.target.notnull())
+table = table.select(*feature_cols, "target")
+data = table.execute()
+```
+
+Same for pandas:
+
+```python
+df = (
+    pd.DataFrame(X, columns=feature_cols)
+    .assign(target=y.astype(np.int8))
+    .pipe(lambda d: d if d["target"].notna().all() else d.dropna(subset=["target"]))
+)
+```
+
+The chained form is one block, one diff, one cognitive unit. Reviewers
+see the whole transformation as a recipe instead of reconstructing it
+from scattered intermediate variables.
+
+Don't fragment a chain across multiple variable assignments unless one
+of those intermediates is genuinely reused later. If you only ever
+reference `df_filtered` once, it should have stayed inside the chain.
+
 ## 2. Develop in `studio/scratch/<bundle-name>/`
 
 This is the lab notebook. Heavy, full of MLflow runs, free to be messy.
@@ -64,9 +158,16 @@ The shipping version comes later.
 ```bash
 cp -r studio/templates/sklearn-pipeline studio/scratch/<bundle-name>
 cd studio/scratch/<bundle-name>
+rm -rf notebooks mlruns _tmp_plots  # template leftovers we don't need
 ```
 
 (or `pymc-inference` for Bayesian bundles.)
+
+**Why delete the `notebooks/` dir from scratch:** the canonical demo
+notebook for a bundle lives in `bundles/<name>/demo.py`, not in scratch.
+The studio scratch is for the training pipeline; the bundle's `demo.py`
+is the buyer-facing artifact and is the only marimo notebook that ships.
+Keep them separate so you don't accidentally maintain two versions.
 
 Now specialize:
 

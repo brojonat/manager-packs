@@ -8,9 +8,9 @@ code is the same regardless of feature scaling.
 import argparse
 from pathlib import Path
 
+import ibis
 import mlflow
 import mlflow.sklearn
-import pandas as pd
 
 DEFAULT_TRACKING = Path(__file__).resolve().parent.parent / "mlruns"
 DEFAULT_DATA = Path(__file__).resolve().parent.parent.parent.parent / "data" / "binary-classification.parquet"
@@ -29,10 +29,17 @@ def main():
     mlflow.set_tracking_uri(f"file:{args.tracking_uri}")
     model = mlflow.sklearn.load_model(f"runs:/{args.run_id}/model")
 
-    df = pd.read_parquet(args.data).head(5)
-    feature_cols = [c for c in df.columns if c.startswith("feature_")]
-    X = df[feature_cols]
-    y_true = df["target"].astype(int)
+    # ibis: read parquet, take first 5 rows, materialize for sklearn
+    table = ibis.duckdb.connect().read_parquet(str(args.data))
+    feature_cols = [c for c in table.columns if c.startswith("feature_")]
+    sample = (
+        table
+        .select(*feature_cols, "target")
+        .limit(5)
+        .execute()
+    )
+    X = sample[feature_cols]
+    y_true = sample["target"].astype(int)
 
     proba = model.predict_proba(X)[:, 1]
     pred = (proba >= args.threshold).astype(int)

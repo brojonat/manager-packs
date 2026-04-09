@@ -36,12 +36,71 @@ deploy and trust."
 <project>/
 ├── data/                # input parquet/csv
 ├── src/
-│   ├── train.py         # Pipeline + XGBClassifier + MLflow logging
+│   ├── train.py         # ibis read → Pipeline + XGBClassifier → MLflow log
 │   ├── predict.py       # reload model, apply tuned threshold
 │   └── plots.py         # ROC, PR, calibration, threshold sweep, SHAP
 ├── notebooks/
 │   └── demo.py          # marimo walkthrough
 └── mlruns/              # MLflow tracking store (gitignored)
+```
+
+## Data access — ibis at the source, pandas at the sklearn boundary
+
+Use **ibis** (`ibis-framework[duckdb]`) to read data, compute summaries
+like class balance, and do any feature engineering. Materialize with
+`.execute()` exactly once, just before passing data to sklearn:
+
+```python
+import ibis
+
+table = ibis.duckdb.connect().read_parquet("data/train.parquet")
+feature_cols = [c for c in table.columns if c.startswith("feature_")]
+
+# Class balance via an ibis aggregation (pushed down to DuckDB)
+class_stats = (
+    table
+    .aggregate(
+        n_pos=table.target.sum().cast("int64"),
+        n_total=table.count(),
+    )
+    .execute()
+    .iloc[0]
+)
+n_pos = int(class_stats["n_pos"])
+scale_pos_weight = (int(class_stats["n_total"]) - n_pos) / n_pos
+
+# Materialize features + target — the ibis → pandas boundary
+data = (
+    table
+    .select(*feature_cols, "target")
+    .execute()
+)
+X = data[feature_cols]
+y = data["target"].astype(int)
+```
+
+Sklearn estimators accept pandas DataFrames and numpy arrays but
+**not** ibis Table objects directly — the `.execute()` call is the
+deliberate handoff. For data already in memory (e.g.
+`make_classification` in a tutorial / demo), pandas via a chained
+expression is fine; ibis only earns its keep when the source is a file
+or database.
+
+Always prefer **fluent chained style** over imperative mutations:
+
+```python
+# GOOD — single chain, reads as a recipe
+data = (
+    table
+    .filter(table.target.notnull())
+    .select(*feature_cols, "target")
+    .execute()
+)
+
+# BAD — fragmented across mutations
+table = table.filter(table.target.notnull())
+table = table.select(*feature_cols, "target")
+data = table.execute()
 ```
 
 ## The pipeline
