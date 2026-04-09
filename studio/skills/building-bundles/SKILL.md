@@ -248,9 +248,29 @@ to the buyer's actual problem, not to our synthetic data.
 
 This is what a buyer runs to see "yes, this works." Constraints:
 
+- **PEP 723 inline script metadata for deps.** Every `demo.py` MUST
+  include a `# /// script` block at the top declaring its
+  dependencies. The buyer runs `marimo edit --sandbox demo.py` and
+  marimo auto-creates an isolated venv — zero manual pip install.
+  This is the standard for ALL bundles, not just heavy ones:
+
+  ```python
+  # /// script
+  # requires-python = ">=3.12"
+  # dependencies = [
+  #     "marimo",
+  #     "xgboost>=2.0",
+  #     "scikit-learn>=1.5",
+  #     "shap>=0.46",
+  #     "pandas>=2.2",
+  #     "numpy>=1.26",
+  #     "matplotlib>=3.9",
+  # ]
+  # ///
+  ```
+
 - **No `datagen` dependency.** Generate the data inline with
-  `sklearn.datasets.make_*` and a fixed seed. The buyer should be able
-  to `marimo edit demo.py` with only the bundle's stated dependencies.
+  `sklearn.datasets.make_*` and a fixed seed.
 - **No MLflow.** MLflow is dev-time tooling for us; the buyer doesn't
   need it. Train the model right in the notebook.
 - **One narrative thread.** Generate data → **explore data** → fit →

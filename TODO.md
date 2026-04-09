@@ -261,6 +261,142 @@ Each dataset:
 
 ---
 
+## Phase 5 — Local LLM fine-tuning with Unsloth
+
+Fine-tune small open-weight LLMs locally for text classification,
+translation, and other NLP tasks. The pitch: providers (OpenAI,
+Anthropic) offer fine-tuning as an API, but you can do it **locally**
+with models you own, keep your data private, and pay nothing per
+inference once trained. Unlike TF-IDF + XGBoost (which requires heavy
+hyperparameter tuning and doesn't generalize to tasks like
+translation), a fine-tuned LLM transfers the same pre-trained language
+understanding to any text task.
+
+**Library:** [unsloth](https://github.com/unslothai/unsloth) — 2×
+faster QLoRA fine-tuning with 70% less VRAM. Wraps HuggingFace
+ecosystem (transformers, PEFT, TRL) with custom Triton kernels.
+
+**Primary model:** **Gemma 4** — Google's recent release, reportedly
+very effective at small sizes. Start here and validate; fall back to
+Phi-4-mini or Llama-3.2 if needed.
+
+**Primary use case:** text classification (the multiclass problem from
+Phase 1, but using an LLM on raw text instead of XGBoost on tabular
+features). Frame classification as instruction-tuning: the prompt is
+the text, the completion is the label. Then extend to translation and
+other text tasks to show the generalization advantage.
+
+**When to use LLM fine-tuning instead of XGBoost:**
+- The input is **text** (reviews, tickets, emails, descriptions),
+  not tabular features
+- You want to leverage the LLM's pre-trained language understanding
+  rather than engineering features manually
+- You have at least a few hundred labeled examples (not zero-shot or
+  few-shot — that's prompting, not fine-tuning)
+- You want a model you **own** (no API dependency, no per-token cost,
+  data never leaves your machine)
+- You want the **same model** to later handle related text tasks
+  (translation, summarization, extraction) without starting over
+
+**When to still use XGBoost:**
+- The features are already structured/tabular — no text involved
+- You don't need language understanding, just feature patterns
+
+### Inference runtime
+
+Use **llama.cpp** directly for production inference (not Ollama).
+Convert the fine-tuned model to GGUF, run via llama.cpp's CLI or
+Python bindings. The trend is toward using llama.cpp directly for
+more control over quantization, context length, and batching.
+
+### Dependency isolation: marimo `--sandbox` + PEP 723
+
+**Do NOT add LLM deps to `studio/pyproject.toml`.** Each LLM
+notebook should be self-contained via PEP 723 inline script metadata.
+Marimo's `--sandbox` mode reads the metadata, creates an isolated
+venv, and installs exactly the declared deps automatically:
+
+```python
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "unsloth",
+#     "marimo",
+#     "torch",
+#     "transformers",
+#     "trl",
+#     "datasets",
+# ]
+# ///
+```
+
+Run with `marimo edit --sandbox demo.py`. The notebook IS the
+dependency declaration — no separate requirements.txt. This is the
+pattern for any bundle with heavy or GPU-specific deps.
+
+### Workflow
+
+```
+1. Pick a Gemma-4 variant from HuggingFace (e.g. unsloth/gemma-4-4b-it-bnb-4bit)
+2. Format classification data as instruction→label pairs (Alpaca format)
+3. Load with unsloth + QLoRA (4-bit quantization)
+4. Fine-tune with HuggingFace TRL's SFTTrainer
+5. Evaluate: per-class F1, confusion matrix (same metrics as the
+   multiclass-classification bundle — we already know how to do this)
+6. Compare: zero-shot prompting vs fine-tuned on the same eval set
+7. Merge LoRA adapter + quantize to GGUF
+8. Serve locally with llama.cpp
+```
+
+### Tasks
+
+- [ ] Build `studio/scratch/llm-text-classification/`:
+  - Marimo notebook (PEP 723 sandbox) demonstrating the full workflow
+  - Load Gemma-4 via unsloth, format data, fine-tune, evaluate
+  - Compare zero-shot prompting vs fine-tuned on the same eval set
+    to show the value of fine-tuning
+- [ ] Build `bundles/llm-text-classification/`:
+  - SKILL.md — when to use LLM fine-tuning vs XGBoost (text vs
+    tabular), the unsloth/Gemma-4 workflow, data formatting, eval
+    metrics (reuse multiclass: per-class F1, confusion matrix), GGUF
+    export + llama.cpp serving
+  - demo.py — PEP 723 sandbox notebook, fully self-contained
+- [ ] `datagen` subcommand for synthetic text classification data
+  (generate labeled text snippets with known categories — could use
+  an LLM to generate the text, or use a small public dataset like
+  a subset of AG News)
+- [ ] Evaluate whether Gemma-4 at 2B or 4B is best for the demo
+  (tradeoff: smaller = faster training loop in the notebook, larger
+  = better accuracy; the demo should be impressive but not take an
+  hour to train)
+- [ ] Ship training code only, NOT LoRA adapter weights (weights are
+  large and model-version-specific; the reproducible code is the
+  product)
+- [ ] Extension: after text classification, add a translation task
+  to show "same fine-tuning pipeline, different task, same model
+  family" — this is the generalization advantage over TF-IDF
+
+---
+
+## Retrofit — PEP 723 inline script metadata on all existing bundles
+
+All 6 Phase 1 bundle `demo.py` files currently list deps in a
+docstring ("Required deps: pip install ..."). Replace with a PEP 723
+`# /// script` block so buyers can run `marimo edit --sandbox demo.py`
+and get an auto-created isolated env with zero manual install.
+
+- [x] `bundles/binary-classification/demo.py`
+- [x] `bundles/multiclass-classification/demo.py`
+- [x] `bundles/multilabel-classification/demo.py`
+- [x] `bundles/regression/demo.py`
+- [x] `bundles/tabular-eda/demo.py`
+- [x] `bundles/unsupervised/demo.py`
+
+The `building-bundles` skill has been updated to make PEP 723 the
+standard. All future bundles should use PEP 723 from the start.
+
+---
+
 ## Open questions
 
 - Pricing: do we charge $5 for foundational templates (low value to

@@ -1,13 +1,22 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "marimo",
+#     "xgboost>=2.0",
+#     "scikit-learn>=1.5",
+#     "shap>=0.46",
+#     "pandas>=2.2",
+#     "numpy>=1.26",
+#     "matplotlib>=3.9",
+# ]
+# ///
 """Worked example for the binary-classification bundle.
 
 Self-contained: generates its own synthetic data, fits XGBoost with all
 the production essentials, and lets you interactively explore the
 threshold tradeoff. No external data files. No MLflow. No datagen.
 
-Required deps:  marimo, xgboost, scikit-learn, shap, pandas, numpy, matplotlib
-
-    pip install marimo xgboost scikit-learn shap pandas numpy matplotlib
-    marimo edit demo.py
+    marimo edit --sandbox demo.py
 """
 
 import marimo

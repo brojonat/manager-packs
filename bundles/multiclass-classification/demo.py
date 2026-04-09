@@ -1,3 +1,15 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "marimo",
+#     "xgboost>=2.0",
+#     "scikit-learn>=1.5",
+#     "shap>=0.46",
+#     "pandas>=2.2",
+#     "numpy>=1.26",
+#     "matplotlib>=3.9",
+# ]
+# ///
 """Worked example for the multiclass-classification bundle.
 
 Self-contained: generates an imbalanced 5-class synthetic dataset,
@@ -5,10 +17,7 @@ fits XGBoost two ways (without and with sample_weight), and shows
 how sample_weight rescues minority-class F1 even though overall
 accuracy barely moves. No external data files. No MLflow.
 
-Required deps:
-    pip install marimo xgboost scikit-learn shap pandas numpy matplotlib
-
-    marimo edit demo.py
+    marimo edit --sandbox demo.py
 """
 
 import marimo

@@ -1,3 +1,14 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "marimo",
+#     "xgboost>=2.0",
+#     "scikit-learn>=1.5",
+#     "pandas>=2.2",
+#     "numpy>=1.26",
+#     "matplotlib>=3.9",
+# ]
+# ///
 """Worked example for the multilabel-classification bundle.
 
 Self-contained: generates a 6-label tabular classification dataset
@@ -5,10 +16,7 @@ with varying per-label positive rates, fits XGBoost wrapped in
 MultiOutputClassifier, and walks through all the multilabel-specific
 diagnostics. No external data files. No MLflow.
 
-Required deps:
-    pip install marimo xgboost scikit-learn pandas numpy matplotlib
-
-    marimo edit demo.py
+    marimo edit --sandbox demo.py
 """
 
 import marimo

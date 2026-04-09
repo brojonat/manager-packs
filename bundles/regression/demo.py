@@ -1,3 +1,16 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "marimo",
+#     "xgboost>=2.0",
+#     "scikit-learn>=1.5",
+#     "shap>=0.46",
+#     "pandas>=2.2",
+#     "numpy>=1.26",
+#     "matplotlib>=3.9",
+#     "scipy>=1.13",
+# ]
+# ///
 """Worked example for the regression bundle.
 
 Self-contained: generates the Friedman1 non-linear regression dataset
@@ -6,10 +19,7 @@ conformalized quantile regression for prediction intervals that
 actually cover their nominal level, and includes residual diagnostics
 plus a LinearRegression baseline. No external data files. No MLflow.
 
-Required deps:
-    pip install marimo xgboost scikit-learn shap pandas numpy matplotlib scipy
-
-    marimo edit demo.py
+    marimo edit --sandbox demo.py
 """
 
 import marimo

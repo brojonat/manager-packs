@@ -1,3 +1,13 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "marimo",
+#     "scikit-learn>=1.5",
+#     "pandas>=2.2",
+#     "numpy>=1.26",
+#     "matplotlib>=3.9",
+# ]
+# ///
 """Worked example for the tabular-eda bundle.
 
 Self-contained: generates a deliberately messy binary classification
@@ -5,10 +15,7 @@ dataset with seven planted issues, then walks through detecting each
 one. No external data files. No MLflow. The end of the notebook is a
 findings table — the input to "what model do I train next?"
 
-Required deps:
-    pip install marimo scikit-learn pandas numpy matplotlib
-
-    marimo edit demo.py
+    marimo edit --sandbox demo.py
 """
 
 import marimo

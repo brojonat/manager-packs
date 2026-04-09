@@ -1,3 +1,13 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "marimo",
+#     "scikit-learn>=1.5",
+#     "pandas>=2.2",
+#     "numpy>=1.26",
+#     "matplotlib>=3.9",
+# ]
+# ///
 """Worked example for the unsupervised bundle.
 
 Self-contained: generates TWO datasets to make the algorithm-vs-shape
@@ -10,10 +20,7 @@ Then walks through K selection via silhouette, stability check across
 random seeds, and IsolationForest anomaly detection on injected
 outliers. No external data files. No MLflow.
 
-Required deps:
-    pip install marimo scikit-learn pandas numpy matplotlib
-
-    marimo edit demo.py
+    marimo edit --sandbox demo.py
 """
 
 import marimo
