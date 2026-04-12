@@ -33,3 +33,7 @@ mlruns/
 
 # Unsloth's torch.compile cache
 unsloth_compiled_cache/
+
+# NHTSA flat file (1.5 GB) — downloaded/cached at runtime
+# Keep CMPL_SCHEMA.txt (small, indispensable for agents)
+bundles/llm-finetuning/nhtsa_cache/FLAT_CMPL.txt

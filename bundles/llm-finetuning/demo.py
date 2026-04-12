@@ -127,6 +127,12 @@ def config(mo):
             "mask_model": "<|start_header_id|>assistant<|end_header_id|>\n\n",
             "load_in_4bit": True,
         },
+        "unsloth/Llama-3.2-3B-Instruct": {
+            "template": "llama-3.1",
+            "mask_user": "<|start_header_id|>user<|end_header_id|>\n\n",
+            "mask_model": "<|start_header_id|>assistant<|end_header_id|>\n\n",
+            "load_in_4bit": True,
+        },
         "unsloth/Qwen3-0.6B": {
             "template": "qwen-2.5",
             "mask_user": "<|im_start|>user\n",

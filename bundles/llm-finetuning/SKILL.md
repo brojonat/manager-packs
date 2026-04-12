@@ -43,6 +43,7 @@ diminish. For most text classification tasks, 1-4B is plenty.
 | Qwen3-0.6B | 0.6B | ~4 GB | `unsloth/Qwen3-0.6B` | Smallest, fastest iteration |
 | Llama-3.2 1B | 1B | ~6 GB | `unsloth/Llama-3.2-1B-Instruct` | Good quality/size ratio |
 | **Gemma-4 E2B** | 2B | 8-10 GB | `unsloth/gemma-4-E2B-it` | **Default.** Strong for its size |
+| Llama-3.2 3B | 3B | ~10 GB | `unsloth/Llama-3.2-3B-Instruct` | Benchmark vs Gemma-4 E2B |
 | Phi-4 mini | 3.8B | ~12 GB | `unsloth/Phi-4-mini-instruct` | Needs 16+ GB VRAM |
 | Gemma-4 E4B | 4B | ~17 GB | `unsloth/gemma-4-E4B-it` | Needs 24+ GB VRAM |
 
@@ -323,12 +324,26 @@ curl http://localhost:8080/v1/chat/completions \
    set `per_device_train_batch_size=1`. If still OOM, use a smaller
    model.
 
+## Demos
+
+This bundle includes two runnable marimo notebooks:
+
+- **`demo.py`** — AG News text classification (4 classes, single label).
+  Quick to run, good for validating the pipeline.
+- **`demo_nhtsa.py`** — NHTSA vehicle safety complaints (multi-target:
+  fire, crash, component via structured JSON output). Downloads NHTSA's
+  2.2M-record complaint database automatically. Demonstrates
+  **programmatic labeling**: using structured fields from an existing
+  database as free supervision to train a model that works from raw
+  text alone.
+
 ## Dependencies
 
 This bundle uses PEP 723 inline script metadata. Run with:
 
 ```bash
 marimo edit --sandbox demo.py
+marimo edit --sandbox demo_nhtsa.py
 ```
 
 If unsloth fails to install via sandbox (CUDA compatibility), install
@@ -336,6 +351,6 @@ manually in a venv:
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install unsloth torch trl datasets mlflow scikit-learn numpy matplotlib marimo
+pip install unsloth torch trl datasets mlflow scikit-learn numpy matplotlib requests marimo
 marimo edit demo.py
 ```

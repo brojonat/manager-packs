@@ -1,0 +1,20 @@
+{
+  "name": "sqlite",
+  "title": "SQLite for Server Apps",
+  "description": "Extend SQLite with application-defined functions (scalar, aggregate, window) and loadable extensions. Covers in-process registration in Python, building and loading C extensions, security (trusted_schema, DIRECTONLY, extension loading controls), and common patterns for server-side SQLite.",
+  "price_cents": 500,
+  "tags": [
+    "backend",
+    "python",
+    "go",
+    "sqlite",
+    "database"
+  ],
+  "files": [
+    "SKILL.md"
+  ],
+  "stripe_product_id": null,
+  "stripe_price_id": null,
+  "stripe_payment_link": null,
+  "reddit_post_id": null
+}
