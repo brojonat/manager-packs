@@ -1,0 +1,12 @@
+{
+  "name": "llm-finetuning",
+  "title": "LLM Fine-Tuning with Unsloth (Done Right)",
+  "description": "Fine-tune small open-weight LLMs locally with Unsloth + QLoRA: model selection, data formatting, MLflow experiment tracking, zero-shot vs fine-tuned comparison, GGUF export for llama.cpp deployment. Swap models via dropdown and compare runs in MLflow. Includes a runnable marimo notebook demonstrating text classification with Gemma-4.",
+  "price_cents": 500,
+  "tags": ["llm", "fine-tuning", "unsloth", "gemma", "qlora"],
+  "files": ["SKILL.md", "demo.py"],
+  "stripe_product_id": null,
+  "stripe_price_id": null,
+  "stripe_payment_link": null,
+  "reddit_post_id": null
+}

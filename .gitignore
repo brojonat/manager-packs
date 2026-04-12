@@ -22,3 +22,14 @@ studio/scratch/*/_tmp_plots/
 
 # Marimo internal session cache
 **/__marimo__/
+
+# Runtime logs and LLM venv
+logs/
+.venv-llm/
+
+# MLflow runtime tracking store
+mlflow.db
+mlruns/
+
+# Unsloth's torch.compile cache
+unsloth_compiled_cache/
