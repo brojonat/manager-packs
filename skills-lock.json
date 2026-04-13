@@ -136,6 +136,11 @@
       "sourceType": "github",
       "computedHash": "4ceb410cd855bc3bbb22d026bb4e657f16e6d262a753afe72abe99acf62ebe38"
     },
+    "marimo-pair": {
+      "source": "marimo-team/marimo-pair",
+      "sourceType": "github",
+      "computedHash": "6014caa2f358725102297ce30ce724fc8a1e3c201a7f745eb6a7423b30da264e"
+    },
     "mcp-builder": {
       "source": "anthropics/skills",
       "sourceType": "github",

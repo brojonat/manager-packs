@@ -10,6 +10,7 @@ node_modules/
 # Third-party skills (managed via skills-lock.json, not source)
 .agents/
 .claude/
+.pi/
 
 # Wrangler local cache
 .wrangler/
