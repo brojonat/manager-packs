@@ -3,6 +3,11 @@ name: multiclass-classification
 description: Build a production-ready multiclass classifier on tabular data using XGBoost. Use when the user needs to predict one of several discrete classes from tabular features (product category, sentiment level, customer segment, intent, fault type). Covers per-class metrics, confusion matrix analysis, sample weighting for imbalance, top-K accuracy, and SHAP. Default to this for any tabular multiclass problem.
 ---
 
+<!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
+  - SKILL.md — this file
+  - demo.py — runnable marimo notebook with worked example
+-->
+
 # Multiclass Classification with XGBoost (Done Right)
 
 For tabular multiclass classification, **default to XGBoost**. Same

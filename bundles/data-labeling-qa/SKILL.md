@@ -3,6 +3,11 @@ name: data-labeling-qa
 description: Audit an untrusted labeled training set before fine-tuning. Find mislabeled examples with four complementary techniques — provenance/integrity checks (off-by-one, schema drift), cleanlab confident learning (random noise), high-loss monitoring (hard cases), and LLM-as-judge on the flagged subset (systematic confusion). Use before spending GPU on any fine-tune where you don't fully trust the labelers. Works with any classification dataset reshaped to `data` and `untrustworthy_label` columns.
 ---
 
+<!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
+  - SKILL.md — this file
+  - demo.py — runnable marimo notebook with worked example
+-->
+
 # Data Labeling QA — Done Right
 
 If you don't trust the people who labeled your training data, **do not

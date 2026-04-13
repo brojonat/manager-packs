@@ -3,6 +3,11 @@ name: multilabel-classification
 description: Build a production-ready multilabel classifier on tabular data using XGBoost wrapped in MultiOutputClassifier. Use when each row can have multiple labels simultaneously (tags, attributes, gene functions, content moderation categories, multi-disease detection). Covers hamming loss, per-label metrics, label co-occurrence, MultiOutputClassifier vs ClassifierChain, and per-label SHAP. Default to this for any tabular multilabel problem.
 ---
 
+<!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
+  - SKILL.md — this file
+  - demo.py — runnable marimo notebook with worked example
+-->
+
 # Multilabel Classification with XGBoost (Done Right)
 
 Multilabel ≠ multiclass. Multiclass picks **one** class from N. Multilabel

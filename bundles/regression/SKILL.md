@@ -3,6 +3,11 @@ name: regression
 description: Build a production-ready regression model on tabular data using XGBoost with conformalized quantile regression for prediction intervals. Use when the user needs to predict a continuous target from tabular features (price, sales, demand, time-to-event, score) and report uncertainty alongside the point estimate. Default to this for any tabular regression task.
 ---
 
+<!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
+  - SKILL.md — this file
+  - demo.py — runnable marimo notebook with worked example
+-->
+
 # Regression with XGBoost + Conformal Prediction Intervals
 
 For tabular regression, **default to XGBoost** as the point estimator

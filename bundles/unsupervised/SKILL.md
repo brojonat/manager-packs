@@ -3,6 +3,11 @@ name: unsupervised
 description: Find structure in unlabeled tabular data — clustering with KMeans / GMM / DBSCAN and proper K selection, IsolationForest anomaly detection, and PCA dimensionality reduction. Use when the user has tabular data without a target column and wants to discover segments, find anomalies, or reduce dimensions. Always run tabular-eda first to profile the data.
 ---
 
+<!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
+  - SKILL.md — this file
+  - demo.py — runnable marimo notebook with worked example
+-->
+
 # Unsupervised Learning — Clustering, Anomalies, and Dimensionality Reduction
 
 When the data has no target column, you're in unsupervised territory.

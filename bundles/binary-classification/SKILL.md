@@ -3,6 +3,11 @@ name: binary-classification
 description: Build a production-ready binary classifier on tabular data using XGBoost. Use when the user needs to predict a binary outcome from tabular features (churn, fraud, conversion, default, click). Covers class imbalance, threshold tuning, calibration verification, and SHAP feature importance. Default to this for any binary classification task on tabular data.
 ---
 
+<!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
+  - SKILL.md — this file
+  - demo.py — runnable marimo notebook with worked example
+-->
+
 # Binary Classification with XGBoost (Done Right)
 
 For tabular binary classification, **default to XGBoost**. It dominates

@@ -3,6 +3,11 @@ name: tabular-eda
 description: Profile a new tabular dataset before modeling. Find target leakage, missing data patterns, high-cardinality categoricals, near-constant features, redundant pairs, and non-linear relationships that Pearson correlation misses. Use whenever the user hands you a CSV or parquet and asks "what should I do with this?" Always run this skill before training any model on data you haven't seen before.
 ---
 
+<!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
+  - SKILL.md — this file
+  - demo.py — runnable marimo notebook with worked example
+-->
+
 # Tabular EDA — Done Right
 
 Whenever you get handed a new tabular dataset, **stop**. Do not jump

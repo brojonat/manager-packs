@@ -3,6 +3,15 @@ name: llm-finetuning
 description: Fine-tune small open-weight LLMs locally with Unsloth + QLoRA for text tasks (classification, extraction, translation). Use when input is raw text (not tabular features), user has labeled examples, and wants model ownership without API costs. Default to Gemma-4 E2B; scale up based on VRAM. Always compare zero-shot vs fine-tuned, log every run to MLflow, export to GGUF for llama.cpp.
 ---
 
+<!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
+  - SKILL.md — this file
+  - demo.py — runnable marimo notebook with worked example
+  - demo_nhtsa.py — NHTSA complaints fine-tuning notebook
+  - MODEL_NAMING.md — model naming conventions
+  - MODEL_ARCHITECTURES.md — model architecture reference
+  - nhtsa_cache/CMPL_SCHEMA.txt — NHTSA complaints schema reference
+-->
+
 # LLM Fine-Tuning with Unsloth (Done Right)
 
 Fine-tune small open-weight LLMs **locally** for text tasks. Unsloth +
