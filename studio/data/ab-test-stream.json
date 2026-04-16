@@ -1,0 +1,29 @@
+{
+  "problem": "ab-test-stream",
+  "n_rows": 4000,
+  "columns": [
+    "visit_id",
+    "arm",
+    "converted"
+  ],
+  "dtypes": {
+    "visit_id": "int32",
+    "arm": "category",
+    "converted": "int8"
+  },
+  "ground_truth": {
+    "n": 4000,
+    "p_control": 0.05,
+    "p_treatment": 0.065,
+    "true_lift": 0.015,
+    "true_relative_lift": 0.3,
+    "allocation": 0.5,
+    "seed": 42,
+    "n_control": 2023,
+    "n_treatment": 1977,
+    "conversions_control": 99,
+    "conversions_treatment": 130,
+    "empirical_p_control": 0.04893722194760257,
+    "empirical_p_treatment": 0.06575619625695499
+  }
+}

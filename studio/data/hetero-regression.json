@@ -1,0 +1,31 @@
+{
+  "problem": "hetero-regression",
+  "n_rows": 500,
+  "columns": [
+    "x",
+    "y",
+    "sigma_x",
+    "is_outlier"
+  ],
+  "dtypes": {
+    "x": "float64",
+    "y": "float64",
+    "sigma_x": "float64",
+    "is_outlier": "bool"
+  },
+  "ground_truth": {
+    "n": 500,
+    "true_intercept": 2.0,
+    "true_slope": 1.5,
+    "base_sigma": 0.5,
+    "hetero_strength": 1.0,
+    "sigma_range": [
+      0.5054298341287005,
+      1.4991047304742386
+    ],
+    "outlier_frac": 0.05,
+    "outlier_scale": 8.0,
+    "n_outliers": 25,
+    "seed": 42
+  }
+}

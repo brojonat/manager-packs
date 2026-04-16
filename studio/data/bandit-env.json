@@ -1,0 +1,30 @@
+{
+  "problem": "bandit-env",
+  "n_rows": 5000,
+  "columns": [
+    "round",
+    "arm",
+    "reward"
+  ],
+  "dtypes": {
+    "round": "int32",
+    "arm": "int16",
+    "reward": "int8"
+  },
+  "ground_truth": {
+    "n_rounds": 5000,
+    "n_arms": 5,
+    "contextual": false,
+    "seed": 42,
+    "true_probs": [
+      0.5363690639601221,
+      0.3982802218501835,
+      0.36381561307671373,
+      0.24749529788842356,
+      0.09237980654944229
+    ],
+    "best_arm": 0,
+    "best_prob": 0.5363690639601221,
+    "gap": 0.13808884210993855
+  }
+}

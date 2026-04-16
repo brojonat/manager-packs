@@ -1,0 +1,52 @@
+{
+  "problem": "sequence-ranking",
+  "n_rows": 2000,
+  "columns": [
+    "visit_id",
+    "ordering",
+    "clicks",
+    "total_revenue",
+    "n_clicks"
+  ],
+  "dtypes": {
+    "visit_id": "int32",
+    "ordering": "object",
+    "clicks": "object",
+    "total_revenue": "float64",
+    "n_clicks": "int16"
+  },
+  "ground_truth": {
+    "n_visits": 2000,
+    "n_items": 8,
+    "position_decay": 0.15,
+    "seed": 42,
+    "item_values": [
+      2.434890121389908,
+      1.5971960993801309,
+      2.646494799778456,
+      2.2434200726484095,
+      0.7354433697191238,
+      2.9390558790918897,
+      2.4028492549758824,
+      2.4651607631923844
+    ],
+    "position_bias": [
+      1.0,
+      0.8607079764250578,
+      0.7408182206817179,
+      0.6376281516217733,
+      0.5488116360940264,
+      0.4723665527410147,
+      0.40656965974059917,
+      0.3499377491111553
+    ],
+    "pair_bonuses": {
+      "3->7": 1.4267649888486018,
+      "6->5": 1.1438651200806644,
+      "1->0": 1.32276161327083
+    },
+    "best_item": 5,
+    "mean_revenue_per_visit": 1.397075,
+    "mean_clicks_per_visit": 0.586
+  }
+}
