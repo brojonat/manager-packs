@@ -5,7 +5,7 @@ description: Profile a new tabular dataset before modeling. Find target leakage,
 
 <!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
   - SKILL.md — this file
-  - demo.py — runnable marimo notebook with worked example
+  - scripts/demo.py — runnable marimo notebook with worked example
 -->
 
 # Tabular EDA — Done Right

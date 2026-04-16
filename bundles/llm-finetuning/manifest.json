@@ -3,8 +3,22 @@
   "title": "LLM Fine-Tuning with Unsloth (Done Right)",
   "description": "Fine-tune small open-weight LLMs locally with Unsloth + QLoRA: model selection, data formatting, MLflow experiment tracking, zero-shot vs fine-tuned comparison, GGUF export for llama.cpp deployment. Two demos: AG News single-label classification and NHTSA multi-target safety complaint classifier (fire/crash/component via structured JSON output).",
   "price_cents": 500,
-  "tags": ["llm", "fine-tuning", "unsloth", "gemma", "qlora"],
-  "files": ["SKILL.md", "demo.py", "demo_nhtsa.py", "MODEL_NAMING.md", "MODEL_ARCHITECTURES.md"],
+  "tags": [
+    "llm",
+    "fine-tuning",
+    "unsloth",
+    "gemma",
+    "qlora"
+  ],
+  "files": [
+    "SKILL.md",
+    "scripts/demo.py",
+    "scripts/demo_nhtsa.py",
+    "assets/demo.html",
+    "assets/demo_nhtsa.html",
+    "references/MODEL_NAMING.md",
+    "references/MODEL_ARCHITECTURES.md"
+  ],
   "stripe_product_id": null,
   "stripe_price_id": null,
   "stripe_payment_link": null,

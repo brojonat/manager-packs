@@ -5,7 +5,7 @@ description: Build a production-ready multiclass classifier on tabular data usin
 
 <!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
   - SKILL.md — this file
-  - demo.py — runnable marimo notebook with worked example
+  - scripts/demo.py — runnable marimo notebook with worked example
 -->
 
 # Multiclass Classification with XGBoost (Done Right)

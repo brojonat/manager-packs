@@ -165,11 +165,11 @@ Each bundle copies `template-sklearn-pipeline` and specializes it.
 
 Each bundle copies `template-pymc-inference` and specializes it.
 
-- [ ] `bayesian-ab-testing` — posterior of conversion-rate diff, expected loss
-- [ ] `bayesian-bandits` — Thompson sampling, contextual bandits, regret
-- [ ] `bayesian-regression` — hierarchical models, partial pooling
-- [ ] `bayesian-mixture-models` — soft clustering with uncertainty
-- [ ] `bayesian-decision-analysis` — utility functions, EVOI
+- [x] `bayesian-ab-testing` — posterior of conversion-rate diff, expected loss
+- [x] `bayesian-bandits` — Thompson sampling, contextual bandits, regret
+- [x] `bayesian-regression` — Hogg-inspired GLM: heteroscedastic + Student-t robust + LOO-CV
+- [x] `bayesian-mixture-models` — soft clustering with uncertainty, LOO-CV for K
+- [x] `bayesian-decision-analysis` — loss functions, EVPI, EVSI, newsvendor, pricing
 
 ---
 
@@ -246,18 +246,18 @@ Each dataset:
 
 ### Still TODO
 
-- [ ] **High-dim tabular**: low intrinsic dimensionality embedded in
+- [x] **High-dim tabular**: low intrinsic dimensionality embedded in
   high-dim noise (for PCA/UMAP demos)
-- [ ] **Bandit environments**: Bernoulli arms, contextual arms with
+- [x] **Bandit environments**: Bernoulli arms, contextual arms with
   known reward functions
-- [ ] **Sequence/ranking data**: simulated user visits where each user
+- [x] **Sequence/ranking data**: simulated user visits where each user
   has a latent preference vector, position bias is configurable, and
   pair/triple bonuses are injected so we can verify the model recovers them
-- [ ] **Regression with outliers / heteroscedastic noise**
-- [ ] **A/B test streams**: paired Bernoulli arms with known lift, for
+- [x] **Regression with outliers / heteroscedastic noise**
+- [x] **A/B test streams**: paired Bernoulli arms with known lift, for
   the bayesian-ab-testing bundle
-- [ ] **Corruptions module**: layer missing data, leakage, label noise on
-  top of any clean dataset
+- [x] **Corruptions module**: `datagen corrupt` — MCAR/MAR/MNAR missing,
+  label noise, target leakage, outlier injection, duplicate rows
 
 ---
 

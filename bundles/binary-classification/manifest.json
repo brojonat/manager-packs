@@ -3,8 +3,15 @@
   "title": "Binary Classification with XGBoost (Done Right)",
   "description": "Build a production-ready binary classifier on tabular data: XGBoost with class imbalance handling, threshold tuning for your real cost function, calibration verification, and SHAP feature importance. Includes a runnable marimo notebook with the full worked example.",
   "price_cents": 500,
-  "tags": ["data-science", "classification", "xgboost"],
-  "files": ["SKILL.md", "demo.py"],
+  "tags": [
+    "data-science",
+    "classification",
+    "xgboost"
+  ],
+  "files": [
+    "SKILL.md",
+    "scripts/demo.py"
+  ],
   "stripe_product_id": null,
   "stripe_price_id": null,
   "stripe_payment_link": null,

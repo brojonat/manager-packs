@@ -5,10 +5,12 @@ description: Fine-tune small open-weight LLMs locally with Unsloth + QLoRA for t
 
 <!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
   - SKILL.md — this file
-  - demo.py — runnable marimo notebook with worked example
-  - demo_nhtsa.py — NHTSA complaints fine-tuning notebook
-  - MODEL_NAMING.md — model naming conventions
-  - MODEL_ARCHITECTURES.md — model architecture reference
+  - scripts/demo.py — runnable marimo notebook with worked example
+  - scripts/demo_nhtsa.py — NHTSA complaints fine-tuning notebook
+  - assets/demo.html — pre-rendered HTML preview (open in any browser)
+  - assets/demo_nhtsa.html — pre-rendered NHTSA notebook preview
+  - references/MODEL_NAMING.md — model naming conventions
+  - references/MODEL_ARCHITECTURES.md — model architecture reference
   - nhtsa_cache/CMPL_SCHEMA.txt — NHTSA complaints schema reference
 -->
 

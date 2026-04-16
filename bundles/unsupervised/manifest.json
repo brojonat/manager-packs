@@ -1,10 +1,17 @@
 {
   "name": "unsupervised",
-  "title": "Unsupervised Learning — Clustering, Anomaly Detection, and Dimensionality Reduction",
+  "title": "Unsupervised Learning \u2014 Clustering, Anomaly Detection, and Dimensionality Reduction",
   "description": "Find structure in unlabeled tabular data: KMeans / GMM / DBSCAN clustering with proper K-selection and stability checks, IsolationForest anomaly detection, and PCA dimensionality reduction. Includes a marimo demo showing where each algorithm wins and where it fails.",
   "price_cents": 500,
-  "tags": ["data-science", "unsupervised", "clustering"],
-  "files": ["SKILL.md", "demo.py"],
+  "tags": [
+    "data-science",
+    "unsupervised",
+    "clustering"
+  ],
+  "files": [
+    "SKILL.md",
+    "scripts/demo.py"
+  ],
   "stripe_product_id": null,
   "stripe_price_id": null,
   "stripe_payment_link": null,

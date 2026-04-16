@@ -38,3 +38,7 @@ unsloth_compiled_cache/
 # NHTSA flat file (1.5 GB) — downloaded/cached at runtime
 # Keep CMPL_SCHEMA.txt (small, indispensable for agents)
 bundles/llm-finetuning/nhtsa_cache/FLAT_CMPL.txt
+
+# Pre-rendered HTML previews (build artifacts of `make export-html`).
+# Tracked in the llmsrules release repo; regenerated locally here.
+bundles/*/assets/*.html

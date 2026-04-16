@@ -5,7 +5,8 @@ description: Audit an untrusted labeled training set before fine-tuning. Find mi
 
 <!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
   - SKILL.md — this file
-  - demo.py — runnable marimo notebook with worked example
+  - scripts/demo.py — runnable marimo notebook with worked example
+  - assets/demo.html — pre-rendered HTML preview (open in any browser)
 -->
 
 # Data Labeling QA — Done Right

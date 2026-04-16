@@ -1,10 +1,20 @@
 {
   "name": "data-labeling-qa",
-  "title": "Data Labeling QA — Audit Untrusted Labels Before Fine-Tuning",
+  "title": "Data Labeling QA \u2014 Audit Untrusted Labels Before Fine-Tuning",
   "description": "Find mislabeled examples in a training set before you waste a fine-tuning run on bad data. Runs four complementary audits: provenance/integrity checks (catches off-by-one structural bugs), cleanlab confident learning (catches random noise), high-loss monitoring, and LLM-as-judge on the flagged subset (catches systematic labeler confusion). Input is a dataframe with `data` and `untrustworthy_label` columns; output is a per-row trust score plus a prioritized review set. Includes a marimo notebook with a deliberately corrupted AG News sample so you can measure each technique's recall against known ground truth.",
   "price_cents": 500,
-  "tags": ["data-quality", "labeling", "cleanlab", "llm-as-judge", "fine-tuning"],
-  "files": ["SKILL.md", "demo.py"],
+  "tags": [
+    "data-quality",
+    "labeling",
+    "cleanlab",
+    "llm-as-judge",
+    "fine-tuning"
+  ],
+  "files": [
+    "SKILL.md",
+    "scripts/demo.py",
+    "assets/demo.html"
+  ],
   "stripe_product_id": null,
   "stripe_price_id": null,
   "stripe_payment_link": null,

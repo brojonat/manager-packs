@@ -5,7 +5,7 @@ description: Find structure in unlabeled tabular data — clustering with KMeans
 
 <!-- Bundled files (accessible via ${CLAUDE_SKILL_DIR}):
   - SKILL.md — this file
-  - demo.py — runnable marimo notebook with worked example
+  - scripts/demo.py — runnable marimo notebook with worked example
 -->
 
 # Unsupervised Learning — Clustering, Anomalies, and Dimensionality Reduction
