@@ -1,0 +1,20 @@
+{
+  "name": "bayesian-ab-testing",
+  "title": "Bayesian A/B Testing with PyMC",
+  "description": "Compare two variants using posterior probabilities and expected loss instead of p-values. Beta-Binomial PyMC model with ArviZ diagnostics, ROPE analysis, sample-size guidance, and a decision framework that directly answers 'which should we ship?' Includes a runnable marimo notebook with the full worked example.",
+  "price_cents": 500,
+  "tags": [
+    "data-science",
+    "bayesian",
+    "ab-testing",
+    "pymc"
+  ],
+  "files": [
+    "SKILL.md",
+    "scripts/demo.py"
+  ],
+  "stripe_product_id": null,
+  "stripe_price_id": null,
+  "stripe_payment_link": null,
+  "reddit_post_id": null
+}

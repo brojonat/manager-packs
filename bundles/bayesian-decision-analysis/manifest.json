@@ -1,0 +1,21 @@
+{
+  "name": "bayesian-decision-analysis",
+  "title": "Bayesian Decision Analysis",
+  "description": "Turn posterior distributions into optimal actions. Covers loss functions, EVPI (is more data worth it?), EVSI (when to stop experimenting), and the newsvendor framework. Three worked scenarios: pricing under demand uncertainty, inventory ordering, and ship-or-wait. The decision layer that sits on top of every other Bayesian bundle.",
+  "price_cents": 500,
+  "tags": [
+    "data-science",
+    "bayesian",
+    "decision-analysis",
+    "pymc",
+    "evpi"
+  ],
+  "files": [
+    "SKILL.md",
+    "scripts/demo.py"
+  ],
+  "stripe_product_id": null,
+  "stripe_price_id": null,
+  "stripe_payment_link": null,
+  "reddit_post_id": null
+}

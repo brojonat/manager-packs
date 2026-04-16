@@ -1,0 +1,20 @@
+{
+  "name": "bayesian-bandits",
+  "title": "Bayesian Bandits \u2014 Thompson Sampling",
+  "description": "Adaptively allocate traffic across variants using Thompson sampling to minimize regret. Covers Bernoulli multi-armed bandits, contextual bandits, regret analysis, and head-to-head comparison with epsilon-greedy and UCB1. Includes a runnable marimo notebook with the full worked example.",
+  "price_cents": 500,
+  "tags": [
+    "data-science",
+    "bayesian",
+    "bandits",
+    "thompson-sampling"
+  ],
+  "files": [
+    "SKILL.md",
+    "scripts/demo.py"
+  ],
+  "stripe_product_id": null,
+  "stripe_price_id": null,
+  "stripe_payment_link": null,
+  "reddit_post_id": null
+}

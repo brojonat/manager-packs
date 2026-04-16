@@ -1,0 +1,21 @@
+{
+  "name": "bayesian-mixture-models",
+  "title": "Bayesian Mixture Models \u2014 Soft Clustering with Uncertainty",
+  "description": "Fit Gaussian mixture models with PyMC for probabilistic clustering: posterior distributions on cluster means, variances, and weights plus per-point soft assignments with uncertainty. Includes LOO-CV model selection for K, sklearn EM comparison, and applications beyond clustering (zero-inflation, outlier detection, regime switching). Runnable marimo notebook included.",
+  "price_cents": 500,
+  "tags": [
+    "data-science",
+    "bayesian",
+    "clustering",
+    "mixture-models",
+    "pymc"
+  ],
+  "files": [
+    "SKILL.md",
+    "scripts/demo.py"
+  ],
+  "stripe_product_id": null,
+  "stripe_price_id": null,
+  "stripe_payment_link": null,
+  "reddit_post_id": null
+}

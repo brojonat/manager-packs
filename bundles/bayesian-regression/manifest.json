@@ -1,0 +1,21 @@
+{
+  "name": "bayesian-regression",
+  "title": "Bayesian Regression \u2014 The Hogg Way",
+  "description": "Fit regression models that handle the real world: heteroscedastic noise, outliers, and model uncertainty. Walks through the Hogg progression from OLS to Bayesian Normal to Student-t robust, with LOO-CV model comparison and GLM generalization. Includes a runnable marimo notebook with the full worked example.",
+  "price_cents": 500,
+  "tags": [
+    "data-science",
+    "bayesian",
+    "regression",
+    "pymc",
+    "glm"
+  ],
+  "files": [
+    "SKILL.md",
+    "scripts/demo.py"
+  ],
+  "stripe_product_id": null,
+  "stripe_price_id": null,
+  "stripe_payment_link": null,
+  "reddit_post_id": null
+}
